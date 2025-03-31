@@ -157,10 +157,10 @@ class MCTS_Task(SearchTask):
         
         if response.startswith("Next step: "):  
             stp = response[len("Next step: "):]  # "Next step: " 길이만큼 잘라냄
+            revised_ = 'Step ' + str(step_n-1) + ': ' + stp
         else:
             stp = response  # "Next step: "이 없으면 그대로 유지
-
-        revised_ = 'Step ' + str(step_n-1) + ': ' + stp
+            revised_ = stp
         print(f'revised 이후의 step: {revised_}\n')
         return revised_ + '\n'
 
@@ -490,8 +490,9 @@ class MCTS_Task(SearchTask):
             return solution, summ
 
     def get_step_value(self, y, action):
+        print(' get step value 함수 시작\n')
         print(f'y:{y}\n')
-        print(f'action:{action}')
+        # print(f'action:{action}')
         if y in self.value_cache.keys():
             return self.value_cache[y]
         prompt_answer = 'Problem: ' + self.question + '\nSolution:\n' + y
@@ -501,23 +502,22 @@ class MCTS_Task(SearchTask):
         else:
             lmm_prompt = self.value_prompt_wrap(self.question, y) 
         llm_prompt = self.llm_prompt(self.question, y)
-        if self.value_method == 'local_prm': #clip, prm + llm + prm
-            confidence, value_score = get_value(self.model,self.processor, prompt_answer, llm_prompt, lmm_prompt, action, self.value_method, img_path=self.img_path)
-            value = (1-self.alpha)*confidence + self.alpha*value_score
-            print(f'value:{value}\n') #评分
-            self.value_cache.update({y: value})
-            return value
+        # if self.value_method == 'local_prm': #clip, prm + llm + prm
+        #     confidence, value_score = get_value(self.model,self.processor, prompt_answer, llm_prompt, lmm_prompt, action, self.value_method, img_path=self.img_path)
+        #     value = (1-self.alpha)*confidence + self.alpha*value_score
+        #     print(f'value:{value}\n') #评分
+        #     self.value_cache.update({y: value})
+        #     return value
 
 
-        else: #qwen, llama3 등의 lmm
-            # confidence, response = get_value(prompt, llm_prompt, lmm_prompt, action, self.value_method, img_path=self.img_path)
-            
-            response = get_value(self.model,self.processor, prompt_answer, llm_prompt, lmm_prompt, action, self.value_method, img_path=self.img_path)
-            value = self.value_outputs_unwrap(response, self.low, 10.0)
-            # value = (1-self.alpha)*confidence + self.alpha*value
-            print(f'unwrap된 value:{value}\n') #평가받기
-            self.value_cache.update({y: value})
-            return value
+        # else: 
+        response = get_value(self.model,self.processor, prompt_answer, llm_prompt, lmm_prompt, action, self.value_method, img_path=self.img_path)
+        value = self.value_outputs_unwrap(response, self.low, 10.0)
+        # value = (1-self.alpha)*confidence + self.alpha*value
+        print(f'unwrap된 value:{value}\n') #평가받기
+        print(' get step value 함수 끝\n')
+        self.value_cache.update({y: value})
+        return value
 
 # clip_model = CLIPModel.from_pretrained('openai/clip-vit-large-patch14-336')
 # clip_processor = AutoProcessor.from_pretrained('openai/clip-vit-large-patch14-336')

@@ -108,27 +108,17 @@ class SearchTask(object):
         return prompt
 
 
-    @staticmethod
-    def zero_single_propose_wrap_use_reflection(x: str, y: str = '', step: int = 0, ref: str = '', lang: str = 'zh') -> str:
-        print('\n', '==============================', 'zero_single_propose_wrap_use_reflection', '==============================', '\nstep: ', step)
-        print('zero_reflect_propose_prompt: \n', x + '\nexisting step:\n' + y + 'Based on the steps outlined earlier, a possible solution for the current step is:\n')
-        if lang == 'en':
-            if not y:
-                y = 'None\n'
-            if not ref:
-                ref = 'None\n'
-            prompt = zero_single_proposal_prompt_use_reflection_en + x + '\nExisting Steps:\n' + y + '\nAnalysis: ' + ref + '\nOutput:'
-        return prompt
+   
 
-    @staticmethod
-    def single_reflection_wrap(x: str, y: str = '', step: int = 0, lang: str = 'zh') -> str:
-        print('\n', '==============================', 'single_reflection_wrap', '==============================', '\nstep: ', step)
-        print('reflection_prompt: \n', x + '\nexisting step:\n' + y + '基于以上步骤给出的意见:\n')
+    # @staticmethod
+    # def single_reflection_wrap(x: str, y: str = '', step: int = 0, lang: str = 'zh') -> str:
+    #     print('\n', '==============================', 'single_reflection_wrap', '==============================', '\nstep: ', step)
+    #     print('reflection_prompt: \n', x + '\nexisting step:\n' + y + '基于以上步骤给出的意见:\n')
 
-        if not y:
-            y = 'None\n'
-        prompt = single_reflection_prompt_en + x + '\nExisting Steps:\n' + y + '\nOutput:'
-        return prompt
+    #     if not y:
+    #         y = 'None\n'
+    #     prompt = single_reflection_prompt_en + x + '\nExisting Steps:\n' + y + '\nOutput:'
+    #     return prompt
 
 
     @staticmethod

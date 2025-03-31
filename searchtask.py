@@ -140,13 +140,13 @@ class SearchTask(object):
 
 
     @staticmethod
-    def value_outputs_unwrap(value_outputs, low=0.0, high=1.0) -> float:
+    def value_outputs_unwrap(value_outputs, low=0.0, high=10) -> float:
         out_value = low
         print(f'value_unwrap 안되는 이유:{value_outputs,type(value_outputs)}')
         if 'Score' not in value_outputs:
             print('점수 출력이 올바르지 않습니다 value_outputs_unwrap\n')
         try:
-            out_value = float(value_outputs.split(":")[-1].strip())
+            out_value = float(value_outputs.split(": ")[-1].strip())
             out_value = min(max(low, out_value), high)
         except Exception as e:
             print(f'점수 출력에 오류가 있습니다! 오류 유형:{e}\n')

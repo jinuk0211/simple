@@ -8,6 +8,10 @@ class SearchTask(object):
         self.question = data
         self.model = model
         self.processor = processor
+        # self.clip = clip
+        # self.clip_processor = clip_processor
+        # self.llm = llm
+        # self.tokenizer = tokenizer
         self.propose_method = propose_method
         self.value_method = value_method
         self.value_cache = {}
@@ -37,7 +41,6 @@ class SearchTask(object):
 
         prompt = llm_prompt + x + y
         return prompt
-        
     @staticmethod
     def summary_prompt_wrap(x: str, y: str = '') -> str:
         summary_prompt = '''
@@ -89,7 +92,7 @@ class SearchTask(object):
 
     @staticmethod
     def single_propose_prompt_wrap(x: str, y: str = '', step: int = 0) -> str:
-        print('\n', '==============================', 'proposal', '==============================', '\nstep: ', step)
+        print('\n', '==============================', 'single_propose_prompt_wrap', '==============================', '\nstep: ', step)
         print('single_propose_prompt: \n', x + '\nexisting step:\n' + y + 'Based on the steps outlined earlier, a possible solution for the current step is:\n')
         prompt = single_proposal_prompt + x + '\nexisting step:\n' + y + '\noutput:'
         return prompt
@@ -97,7 +100,7 @@ class SearchTask(object):
 
     @staticmethod
     def zero_single_propose_wrap(x: str, y: str = '', step: int = 0, lang: str = 'zh') -> str:
-        print('\n', '==============================', 'proposal', '==============================', '\nstep: ', step)
+        print('\n', '==============================', 'zero_single_propose_wrap', '==============================', '\nstep: ', step)
         print('zero_propose_prompt: \n', x + '\nexisting step:\n' + y + 'Based on the steps outlined earlier, a possible solution for the current step is:\n')
         if not y:
             y = 'None\n'
@@ -107,7 +110,7 @@ class SearchTask(object):
 
     @staticmethod
     def zero_single_propose_wrap_use_reflection(x: str, y: str = '', step: int = 0, ref: str = '', lang: str = 'zh') -> str:
-        print('\n', '==============================', 'proposal', '==============================', '\nstep: ', step)
+        print('\n', '==============================', 'zero_single_propose_wrap_use_reflection', '==============================', '\nstep: ', step)
         print('zero_reflect_propose_prompt: \n', x + '\nexisting step:\n' + y + 'Based on the steps outlined earlier, a possible solution for the current step is:\n')
         if lang == 'en':
             if not y:
@@ -119,7 +122,7 @@ class SearchTask(object):
 
     @staticmethod
     def single_reflection_wrap(x: str, y: str = '', step: int = 0, lang: str = 'zh') -> str:
-        print('\n', '==============================', 'reflection', '==============================', '\nstep: ', step)
+        print('\n', '==============================', 'single_reflection_wrap', '==============================', '\nstep: ', step)
         print('reflection_prompt: \n', x + '\nexisting step:\n' + y + '基于以上步骤给出的意见:\n')
 
         if not y:
@@ -130,7 +133,7 @@ class SearchTask(object):
 
     @staticmethod
     def single_reflection_wrap_simple(x: str, y: str = '', step: int = 0, lang: str = 'en') -> str:
-        print('\n', '==============================', 'reflection', '==============================', '\nstep: ', step)
+        print('\n', '==============================', 'single_reflection_wrap_simple', '==============================', '\nstep: ', step)
         print('propose_prompt: \n', x + '\nexisting step:\n' + y + '基于以上步骤给出的意见:\n')
         if lang == 'en':
             if not y:

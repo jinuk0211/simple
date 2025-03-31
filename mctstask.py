@@ -160,7 +160,7 @@ class MCTS_Task(SearchTask):
         else:
             stp = response  # "Next step: "이 없으면 그대로 유지
 
-        revised_ = 'Step ' + str(step_n) + ': ' + stp
+        revised_ = 'Step ' + str(step_n-1) + ': ' + stp
         print(f'revised 이후의 step: {revised_}\n')
         return revised_ + '\n'
 
@@ -195,7 +195,7 @@ class MCTS_Task(SearchTask):
                 print('输出步骤重复！\n')
                 return ''
 
-            revised_ = 'Step ' + str(step_n) + ': ' + stp
+            revised_ = 'Step ' + str(step_n-1) + ': ' + stp
             print(f'标准化后新的步骤:{revised_}\n')
             return revised_ + '\n'
 
@@ -211,7 +211,7 @@ class MCTS_Task(SearchTask):
                 print('输出步骤重复！\n')
                 return ''
 
-            revised_ = 'Step ' + str(step_n) + ': ' + p_
+            revised_ = 'Step ' + str(step_n-1) + ': ' + p_
             print(f'标准化后新的步骤:{revised_}\n')
             return revised_ + '\n'
 

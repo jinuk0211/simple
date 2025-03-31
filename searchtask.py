@@ -48,8 +48,8 @@ class SearchTask(object):
 
         Given problem: '''
         print('\n', '==============================', 'summary', '==============================', '\n')
-        print('summary_prompt: \n', x + '\nexisting step:\n' + y + 'The summary based on the reasoning steps i:\n')
-        prompt = summary_prompt + x + '\nexisting step:\n' + y + '\noutput:'
+        print('summary_prompt: \n', x + '\n' + y + 'The summary based on the reasoning steps i:\n')
+        prompt = summary_prompt + x + '\n' + y + '\noutput:'
         return prompt
 
     @staticmethod
@@ -60,7 +60,7 @@ class SearchTask(object):
         Problem: '''
 
         print('\n', '==============================', 'summary', '==============================', '\n')
-        print('math_summary_prompt: \n', x + '\nexisting step:\n' + y + 'The summary based on the reasoning steps i:\n')
+        print('math_summary_prompt: \n', x + '\n' + y + 'The summary based on the reasoning steps i:\n')
         prompt = MATH_summary_prompt + x + '\nSolution: ' + y + '\nExtracted answer:'
         return prompt
 
@@ -74,8 +74,8 @@ class SearchTask(object):
         Given problem:'''
 
         print('\n', '==============================', 'summary', '==============================', '\n')
-        print('general_summary_prompt: \n', x + '\nexisting step:\n' + y + 'The summary based on the reasoning steps i:\n')
-        prompt = general_evaluate_summary_prompt + x + '\nexisting step:\n' + y + '\noutput:'
+        print('general_summary_prompt: \n', x + '\n' + y + 'The summary based on the reasoning steps i:\n')
+        prompt = general_evaluate_summary_prompt + x + '\n' + y + '\noutput:'
         return prompt
 
     # Example 1
@@ -93,18 +93,18 @@ class SearchTask(object):
     @staticmethod
     def single_propose_prompt_wrap(x: str, y: str = '', step: int = 0) -> str:
         print('\n', '==============================', 'single_propose_prompt_wrap', '==============================', '\nstep: ', step)
-        print('single_propose_prompt: \n', x + '\nexisting step:\n' + y + 'Based on the steps outlined earlier, a possible solution for the current step is:\n')
-        prompt = single_proposal_prompt + x + '\nexisting step:\n' + y + '\noutput:'
+        print('single_propose_prompt: \n', x + '\n' + y + 'Based on the steps outlined earlier, a possible solution for the current step is:\n')
+        prompt = single_proposal_prompt + x + y + '\noutput:'
         return prompt
 
 
     @staticmethod
     def zero_single_propose_wrap(x: str, y: str = '', step: int = 0, lang: str = 'zh') -> str:
         print('\n', '==============================', 'zero_single_propose_wrap', '==============================', '\nstep: ', step)
-        print('zero_propose_prompt: \n', x + '\nexisting step:\n' + y + 'Based on the steps outlined earlier, a possible solution for the current step is:\n')
+        print('zero_propose_prompt: \n', x + '\n' + y + 'Based on the steps outlined earlier, a possible solution for the current step is:\n')
         if not y:
             y = 'None\n'
-        prompt = zero_single_proposal_prompt_en + x + '\nExisting Steps:\n' + y + '\nOutput:'
+        prompt = zero_single_proposal_prompt_en + x + '\n' + y + '\nOutput:'
         return prompt
 
 
@@ -124,17 +124,17 @@ class SearchTask(object):
     @staticmethod
     def single_reflection_wrap_simple(x: str, y: str = '', step: int = 0, lang: str = 'en') -> str:
         print('\n', '==============================', 'single_reflection_wrap_simple', '==============================', '\nstep: ', step)
-        print('propose_prompt: \n', x + '\nexisting step:\n' + y + '基于以上步骤给出的意见:\n')
+        print('propose_prompt: \n', x + '\n' + y + '基于以上步骤给出的意见:\n')
         if lang == 'en':
             if not y:
                 y = 'None\n'
-            prompt = single_reflection_prompt_simple_en + x + '\nExisting Steps:\n' + y
+            prompt = single_reflection_prompt_simple_en + x + '\n' + y
         return prompt
 
     @staticmethod
     def value_prompt_wrap(x: str, y: str) -> str:
         print('\n', '==============================', 'value_prompt', '==============================', '\n')
-        value_prompt = critic_simplified + x + '\nexisting step:\n' + y.strip() + '\noutput:'
+        value_prompt = critic_simplified + x + '\n' + y.strip() + '\noutput:'
         return value_prompt
 
 
@@ -145,8 +145,12 @@ class SearchTask(object):
         print(f'value_unwrap 안되는 이유:{value_outputs,type(value_outputs)}')
         if 'Score' not in value_outputs:
             print('점수 출력이 올바르지 않습니다 value_outputs_unwrap\n')
-        try:
-            out_value = float(value_outputs.split(": ")[-1].strip())
+        try:        
+        # try:
+        #     out_value = float(value_outputs.split(":")[1])
+        #     print(f'split 된 value:{out_value}')
+        #     out_value = min(max(low, out_value), high)
+            out_value = float(value_outputs.split(":")[1].strip())
             out_value = min(max(low, out_value), high)
         except Exception as e:
             print(f'점수 출력에 오류가 있습니다! 오류 유형:{e}\n')

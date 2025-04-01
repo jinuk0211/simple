@@ -251,13 +251,13 @@ class MCTS_Task(SearchTask):
        
         
         if 'unsolved' in p or step_n <= 1:
-            print('标准化后的意见: <continue>\n')
+            print('revised된 reflection: <continue>\n')
             return '<continue>'
         elif 'solved' in p:
-            print('标准化后的意见: <end>\n')
+            print('revised된 reflection: <end>\n')
             return '<end>'
         else:
-            print('标准化后的意见: <continue>\n')
+            print('revised된 reflection: <continue>\n')
             return '<continue>'
 
     def get_reflection(self, y, step_n):
@@ -289,32 +289,18 @@ class MCTS_Task(SearchTask):
             p = p + _ + ' '
         p = p.strip()
 
-        if self.lang == 'zh':
-            if '已解决' in p or '已经解决' in p:
-                if step_n > 1:
-                    print('此步问题已解决，停止下探。\n')
-                    return '<end>'
-                else:
-                    return ''
-
-            if '意见:' not in p:
+       
+ 
+        if 'Problem solved' in p:
+            print('revised된 reflection: <end>\n')
+            return '<end>'
+        else:
+            if 'Analysis:' not in p:
                 print('输出格式有误！\n')
                 return ''
-            revised_ = p.split('意见:')[1]
-            print(f'标准化后的意见:{revised_}\n')
+            revised_ = p.split('Analysis:')[1].strip()
+            print(f'revised된 reflection:{revised_}\n')
             return revised_
-
-        else:
-            if 'Problem solved' in p:
-                print('标准化后的意见: <end>\n')
-                return '<end>'
-            else:
-                if 'Analysis:' not in p:
-                    print('输出格式有误！\n')
-                    return ''
-                revised_ = p.split('Analysis:')[1].strip()
-                print(f'标准化后的意见:{revised_}\n')
-                return revised_
 
 
     def get_summary(self, y):

@@ -124,7 +124,7 @@ class SearchTask(object):
     @staticmethod
     def single_reflection_wrap_simple(x: str, y: str = '', step: int = 0, lang: str = 'en') -> str:
         print('\n', '==============================', 'single_reflection_wrap_simple', '==============================', '\nstep: ', step)
-        print('propose_prompt: \n', x + '\n' + y + '基于以上步骤给出的意见:\n')
+        print('propose_prompt: \n', x + '\n' + y + '이전 단계에 대한 reflection:\n')
         if lang == 'en':
             if not y:
                 y = 'None\n'

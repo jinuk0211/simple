@@ -98,13 +98,23 @@ class SearchTask(object):
         return prompt
 
 
+    # @staticmethod
+    # def zero_single_propose_wrap(x: str, y: str = '', step: int = 0, lang: str = 'zh') -> str:
+    #     print('\n', '==============================', 'zero_single_propose_wrap', '==============================', '\nstep: ', step)
+    #     print('프롬프트: \n', x + '\n' + y + '\n 프롬프트 끝')
+    #     if not y:
+    #         y = 'None\n'
+    #     prompt = zero_single_proposal_prompt_en + x + '\n' + y + '\nOutput:'
+    #     return prompt
+
+
     @staticmethod
     def zero_single_propose_wrap(x: str, y: str = '', step: int = 0, lang: str = 'zh') -> str:
         print('\n', '==============================', 'zero_single_propose_wrap', '==============================', '\nstep: ', step)
-        print('프롬프트: \n', x + '\n' + y + '\n 프롬프트 끝')
+        print('\n프롬프트: \n', x + '\n' + y + '\n 프롬프트 끝\n')
         if not y:
             y = 'None\n'
-        prompt = zero_single_proposal_prompt_en + x + '\n' + y + '\nOutput:'
+        prompt = zero_single_proposal_prompt_en.format(x,y) 
         return prompt
 
 

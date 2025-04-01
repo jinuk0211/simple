@@ -47,21 +47,37 @@ Please complete the response based on the reasoning prefix without altering its 
 
 Reasoning prefix: {reasoning_prefix}"""
 
+# zero_single_proposal_prompt_en = '''
+# Your task is to give the correct next step, given image, problem, image description and an existing partial solution (not a complete answer).
+# the format of the input is:
+# "Problem: ...
+# Image Description: ...
+# Step 1: ...
+# Step 2: ...
+# ...
+# Step n: ..."
+# where ... denotes omitted input information.
+# If no existing steps are provided, you need to output the first step. Otherwise, you need to output the next step (step n+1) that you think is correct, 
+# The output format is limited to:
+# "Next step: ..."
+# where ... indicates omitted output information, which is the part you should fill in. Your output should be a complete reasoning step that includes calculations, reasoning, choosing answers, etc.
+# Here is the input, please follow the restricted output format.
+
+# Problem: '''
+
 zero_single_proposal_prompt_en = '''
-Your task is to give the correct next step, given image, problem, image description and an existing partial solution (not a complete answer).
-the format of the input is:
-"Problem: ...
-Image Description: ...
-Step 1: ...
-Step 2: ...
+generate a step-by-step reasoning process to solve the problem. Ensure the steps are logical and concise.the format of the input is:
+"Problem: 
+Image Description: 
+Let's think step by step.
+
+Step 1: 
+Step 2: 
 ...
-Step n: ..."
-where ... denotes omitted input information.
-If no existing steps are provided, you need to output the first step. Otherwise, you need to output the next step (step n+1) that you think is correct, 
-The output format is limited to:
-"Next step: ..."
-where ... indicates omitted output information, which is the part you should fill in. Your output should be a complete reasoning step that includes calculations, reasoning, choosing answers, etc.
-Here is the input, please follow the restricted output format.
+Step n: "
 
-Problem: '''
+{question}
 
+Please complete the response based on the reasoning prefix without altering its content.
+
+{reasoning_prefix}

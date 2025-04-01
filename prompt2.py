@@ -8,6 +8,13 @@ Problem:"""
 image_description_score = '''Score how well the image description relates to the given problem and image. Higher accuracy of description should result in a higher score. The score should be a decimal between 0 and 10. The output format is limited to: "Score:...", where ... represents the omitted output content, which you need to fill in.
 Input:
 Problem: '''
+image_description_score = '''Your task is to evaluate how well the image description describes the given image. The score should be a decimal between 0 and 10.  Higher accuracy of description should result in a higher score. 
+Your scoring should be entirely based on the input image description and image provided. Do not generate additional Image Description or solution.
+Now given image and image description,  Provide the score. 
+The output format is limited to: "Score:...", where ... represents the omitted output content, which you need to fill in.
+Input:
+'''
+
 
 critic_simplified = '''Your task is to evaluate whether the given steps can successfully solve the provided problem and output a score. The score should be a decimal between 0 and 10. If all the steps are correct and the answer is calculated, the score is 10. The closer the steps are to the final answer, the closer the score is to 10. A score of 9 or higher must be given only if the specific numerical answer has been calculated.
 First, generate an analysis, then provide the score. Your analysis and scoring should be entirely based on the input steps provided. Do not generate additional steps.
@@ -57,7 +64,7 @@ Step 2: ...
 ...
 Step n: ..."
 where ... denotes omitted input information.
-If no informatiopns are provided, you need to output the first step. Otherwise, you need to output the next step (step n+1) that you think is correct, 
+If no informations are provided, you need to output the first step. Otherwise, you need to output the next step (step n+1) that you think is correct, 
 The output format is limited to:
 "Next step: ..."
 where ... indicates the part you should fill in. Your output should be a complete reasoning step
